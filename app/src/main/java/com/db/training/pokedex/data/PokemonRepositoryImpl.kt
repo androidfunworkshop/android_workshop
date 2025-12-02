@@ -23,7 +23,7 @@ fun generatePokemonList(): List<Pokemon> {
             Pokemon("Charmander", R.drawable.charmander),
             Pokemon("Charmeleon", R.drawable.charmeleon),
             Pokemon("Charizard", R.drawable.charizard),
-            Pokemon("Squirtle", R.drawable.squirt),
+            Pokemon("Squirtle", R.drawable.squirtle),
             Pokemon("Wartortle", R.drawable.wartortle),
             Pokemon("Blastoise", R.drawable.blastoise),
             Pokemon("Caterpie", R.drawable.caterpie),
@@ -42,6 +42,7 @@ fun generatePokemonList(): List<Pokemon> {
             Pokemon("Ekans", R.drawable.ekans),
             Pokemon("Arbok", R.drawable.arbok),
             Pokemon("Pikachu", R.drawable.pikachu),
+            Pokemon("Raichu", R.drawable.raichu),
             Pokemon("Raichu", R.drawable.raichu),
         )
     )
