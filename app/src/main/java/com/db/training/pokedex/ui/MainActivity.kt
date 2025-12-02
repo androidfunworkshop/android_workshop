@@ -6,13 +6,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -46,7 +54,7 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel = PokemonViewModel()
+    val viewModel: PokemonViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +68,9 @@ class MainActivity : ComponentActivity() {
                             .padding(innerPadding)
                             .fillMaxSize()
                     ) {
-                        PokemonDetails(pokemonList.random())
+                        //PokemonList(pokemonList)
+                        //PokemonLazyList(pokemonList)
+                        PokemonLazyGrid(pokemonList)
                     }
                 }
             }
@@ -68,14 +78,42 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//not scrollable
+@Composable
+fun PokemonList(pokemons: List<Pokemon>) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        pokemons.forEach { pokemon ->
+            PokemonDetails(pokemon)
+        }
+    }
+}
+
+//scrollable
+@Composable
+fun PokemonLazyList(pokemons: List<Pokemon>) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(pokemons) {
+            PokemonDetails(it)
+        }
+    }
+}
+
+//scrollable grid
+@Composable
+fun PokemonLazyGrid(pokemons: List<Pokemon>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(count = 2),
+        contentPadding = PaddingValues(6.dp),
+    ) {
+        items(pokemons) {
+            PokemonDetails(it)
+        }
+    }
+}
+
 @Composable
 fun PokemonDetails(pokemon: Pokemon) {
-    val context = LocalContext.current
-    var dominantColor by remember { mutableStateOf(Color.LightGray) }
-
-    LaunchedEffect(pokemon.image) {
-        dominantColor = getDominantColor(context, pokemon.image)
-    }
+    val dominantColor = pokemon.backgroundColor
 
     Card(
         modifier = Modifier
@@ -132,5 +170,24 @@ private suspend fun getDominantColor(context: Context, @DrawableRes drawable: In
 fun PokemonPreview() {
     PokedexTheme {
         PokemonDetails((Pokemon("Bulbasaur", R.drawable.bulbasaur)))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PokemonLazyListPreview() {
+    val pokemonMockList = listOf(
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+        Pokemon("Bulbasaur", R.drawable.bulbasaur),
+
+        )
+    PokedexTheme {
+        PokemonLazyList(pokemonMockList)
     }
 }
