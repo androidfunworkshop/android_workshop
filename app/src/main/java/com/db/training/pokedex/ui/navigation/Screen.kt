@@ -5,5 +5,8 @@ package com.db.training.pokedex.ui.navigation
  **/
 sealed class Screen(val route: String) {
     object List : Screen("list")
-    object Details : Screen("details")
+    object Details : Screen("details/{pokemonName}") {
+        fun createRoute(pokemonName: String) = "details/$pokemonName"
+
+    }
 }

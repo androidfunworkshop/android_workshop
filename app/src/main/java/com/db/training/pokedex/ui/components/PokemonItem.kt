@@ -81,7 +81,7 @@ fun PokemonItem(pokemon: Pokemon, onPokemonClicked: () -> Unit = {} ) {
     }
 }
 
-private suspend fun getDominantColor(context: Context, @DrawableRes drawable: Int) =
+suspend fun getDominantColor(context: Context, @DrawableRes drawable: Int) =
     withContext(Dispatchers.IO) {
         val drawable = ContextCompat.getDrawable(context, drawable) ?: return@withContext Color.Gray
 

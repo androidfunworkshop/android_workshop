@@ -43,11 +43,14 @@ class MainActivity : ComponentActivity() {
                                 PokemonLazyGrid(
                                     pokemons = pokemonList,
                                     onPokemonClicked = {
-                                        navController.navigate(Screen.Details.route)
+                                        navController.navigate(Screen.Details.createRoute(it.name))
                                     })
                             }
-                            composable(Screen.Details.route) {
-                                PokemonDetails(onBackPressed = {
+                            composable(Screen.Details.route) { backStackEntry ->
+                                val pokemonName = backStackEntry.arguments?.getString("pokemonName")
+                                val pokemon = pokemonList.firstOrNull { it.name == pokemonName }
+                                    ?: pokemonList.last()
+                                PokemonDetails(pokemon = pokemon, onBackPressed = {
                                     navController.popBackStack()
                                 })
                             }
