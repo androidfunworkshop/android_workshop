@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -53,7 +54,7 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel = PokemonViewModel()
+    val viewModel: PokemonViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,12 +113,7 @@ fun PokemonLazyGrid(pokemons: List<Pokemon>) {
 
 @Composable
 fun PokemonDetails(pokemon: Pokemon) {
-    val context = LocalContext.current
-    var dominantColor by remember { mutableStateOf(Color.LightGray) }
-
-    LaunchedEffect(pokemon.image) {
-        dominantColor = getDominantColor(context, pokemon.image)
-    }
+    val dominantColor = pokemon.backgroundColor
 
     Card(
         modifier = Modifier
