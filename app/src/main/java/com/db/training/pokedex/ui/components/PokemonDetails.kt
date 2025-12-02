@@ -145,7 +145,8 @@ private fun Stat(name: String, value: Int, color: Color, modifier: Modifier = Mo
             color = color,
             progress = { currentProgress },
             strokeCap = StrokeCap.Round,
-            gapSize = 0.dp
+            gapSize = 0.dp,
+            drawStopIndicator = {}
 
         )
         Text(text = value.toString())
