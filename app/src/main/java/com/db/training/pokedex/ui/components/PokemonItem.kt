@@ -42,13 +42,7 @@ import kotlinx.coroutines.withContext
  **/
 @Composable
 fun PokemonItem(pokemon: Pokemon, onPokemonClicked: () -> Unit = {} ) {
-    val context = LocalContext.current
-    var dominantColor by remember { mutableStateOf(Color.LightGray) }
-
-    LaunchedEffect(pokemon.image) {
-        dominantColor = getDominantColor(context, pokemon.image)
-    }
-
+    val dominantColor = pokemon.backgroundColor
     Card(
         modifier = Modifier
             .fillMaxWidth()
