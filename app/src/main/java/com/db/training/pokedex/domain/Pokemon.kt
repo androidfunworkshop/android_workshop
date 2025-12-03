@@ -7,5 +7,6 @@ import androidx.annotation.DrawableRes
  **/
 data class Pokemon(
     val name: String,
-    @DrawableRes val image: Int
+    @DrawableRes
+    val image: Int
 )

@@ -1,6 +1,7 @@
 package com.db.training.pokedex.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,16 +11,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
+
+    val viewModel = PokemonViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             _root_ide_package_.com.db.training.pokedex.ui.theme.PokedexTheme {
+                val pokemonList by viewModel.pokemonList.collectAsState()
+
+                pokemonList.forEach { pokemon -> Log.d("Pokemon: ", pokemon.name) }
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(
                         Modifier
@@ -27,8 +37,8 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                     ) {
                         Greeting(
-                            name = "world",
-                            modifier = Modifier.align(Alignment.Center)
+                            name = pokemonList.first().name,
+                            modifier = Modifier.align(Alignment.BottomEnd)
                         )
                     }
                 }
