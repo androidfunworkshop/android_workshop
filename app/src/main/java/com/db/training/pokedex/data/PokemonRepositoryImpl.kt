@@ -43,7 +43,6 @@ fun generatePokemonList(): List<Pokemon> {
             Pokemon("Arbok", R.drawable.arbok),
             Pokemon("Pikachu", R.drawable.pikachu),
             Pokemon("Raichu", R.drawable.raichu),
-            Pokemon("Raichu", R.drawable.raichu),
         )
     )
     return pokemonList
